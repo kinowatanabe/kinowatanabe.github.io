@@ -1,0 +1,51 @@
+---
+title: "Here are some plotly plots"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cerulean
+---
+
+Interactivity is great. 
+
+We often make plots in DS.
+
+Here's the tidyverse.
+```{r message=FALSE}
+library(tidyverse)
+library(plotly)
+
+library(p8105.datasets)
+```
+
+
+Let's load the airbnb dataset.
+
+```{r}
+data(nyc_airbnb)
+
+nyc_airbnb = 
+  nyc_airbnb |> 
+  mutate(rating = review_scores_location / 2) |>
+  select(
+    neighbourhood_group, neighbourhood, rating, price, room_type, lat, long) |>
+  filter(
+    !is.na(rating), 
+    neighbourhood_group == "Manhattan",
+    room_type == "Entire home/apt",
+    price %in% 100:500)
+```
+
+
+Let's make a scatterplot. but interactive this time.
+
+```{r}
+nyc_airbnb |>
+  mutate(text_label = str_c("Price: $", price, "\nRating: ", rating)) |> 
+  plot_ly(
+    x = ~lat, y = ~long, 
+    type = "scatter", mode = "markers",
+    color = ~price, text = ~text_label, alpha = 0.5)
+```
+
