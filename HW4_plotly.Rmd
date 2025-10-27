@@ -17,7 +17,7 @@ library(p8105.datasets)
 
 * Inspection dates (`inspection_date`) of 1/1/1900 mean an establishment has not yet had an inspection. We will remove these sites.
 
-### Scatterplot of Café/Coffee/Tea shops in Manhattan by Latitude/Longitude and inspection scores.
+### Scatterplot of Café/Coffee/Tea shops in Manhattan by Latitude/Longitude and Inspection Scores.
 
 * Higher scores incurred more regulation violations (food handling, food temperature, personal hygiene of restaurant workers, and vermin control).
 
@@ -43,7 +43,12 @@ plot_ly(data = coffee_manhattan_rest_inspec,
     type = "scatter", mode = "markers",
     color = ~score,
     text = ~text_label, alpha = 0.5
-    )
+    ) |> 
+  layout(
+    title = "Lat/Long of Manhattan Café/Coffee/Tea Shops",
+    xaxis = list(title = "Latitude"),
+    yaxis = list(title = "Longitude")
+  )
 ```
 
 ### Are violations aggregated to certain zipcodes: Bar plot
@@ -76,28 +81,36 @@ multiple_offender |>
   mutate(zipcode = fct_reorder(zipcode, violation_count)
   ) |>
   plot_ly(x = ~zipcode, y = ~violation_count, 
-        color = ~zipcode, type = "bar", colors = "viridis", text = ~text_label)
+        color = ~zipcode, type = "bar", colors = "viridis", text = ~text_label) |> 
+  layout(
+    title = "Mean Inspection Scores for Cafes By Year",
+    xaxis = list(title = "Zipcode"),
+    yaxis = list(title = "Violation Counts")
+  )
   
 ```
 
 * Interestingly, zipcodes 10112 and 10121 have the highest mean violation score of 66 and 38.4, respectively. 10112 (GODIVA CAFE) has a violation count of 4, and 10121 (PRIMO COFFEE CART
 , DUNKIN') has a violation count of 37.
 
-### Mean score over time
+### Mean Score Over Time 
 
 ```{r}
 coffee_manhattan_rest_inspec |> 
-  group_by(inspection_date) |> 
-  summarise(
-    avg_score = mean(as.numeric(score), na.rm = TRUE),
-    n = n()
-  ) |> 
+  drop_na(score) |> 
+  separate(inspection_date, into = c("year", "month", "day"), convert = TRUE) |> 
+  group_by(year, month) |> 
+  summarise(mean_score = mean(score, na.rm = TRUE)) |> 
   ungroup() |> 
   plot_ly(
-    x = ~inspection_date,
-    y = ~avg_score,
-    type = "scatter",
-    mode = "lines+markers")
+    x = ~month, y = ~mean_score,
+    color = ~as.factor(year),
+    type = "scatter", mode = "lines+markers",
+    colors = "viridis") |> 
+  layout(
+    title = "Mean Inspection Scores for Cafes By Year",
+    xaxis = list(title = "Month"),
+    yaxis = list(title = "Mean Score")
+  )
 ```
-
 
