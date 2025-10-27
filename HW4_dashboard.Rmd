@@ -1,0 +1,109 @@
+---
+title: "Cafe Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+library(tidyverse)
+library(plotly)
+library(p8105.datasets)
+
+data(rest_inspec)
+
+rest_inspec |> 
+  janitor::clean_names()
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Scatterplot of Café/Coffee/Tea shops in Manhattan by Latitude/Longitude and Inspection Scores
+
+```{r}
+coffee_manhattan_rest_inspec <- rest_inspec |> 
+  drop_na(inspection_date, score, latitude, longitude) |> 
+  filter(
+    boro == "Manhattan",
+    cuisine_description == "Café/Coffee/Tea",
+    latitude != 0,
+    longitude != 0,
+    inspection_date > as.Date("1900-01-01")) |> 
+  mutate(text_label = str_c("Zipcode:", zipcode, "\nName: ", dba, "\nScore: ", score ))
+
+plot_ly(data = coffee_manhattan_rest_inspec,
+    x = ~latitude, y = ~longitude, 
+    type = "scatter", mode = "markers",
+    color = ~score,
+    text = ~text_label, alpha = 0.5
+    ) |> 
+  layout(
+    title = "Lat/Long of Manhattan Café/Coffee/Tea Shops",
+    xaxis = list(title = "Latitude"),
+    yaxis = list(title = "Longitude")
+  )
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Are violations aggregated to certain zipcodes: Bar plot
+
+```{r}
+multiple_offender_names <- coffee_manhattan_rest_inspec |> 
+  drop_na(zipcode, score) |> 
+  group_by(camis, dba, zipcode) |> 
+  summarise(
+    violation_count = n(),
+    mean_score = mean(as.numeric(score), na.rm = TRUE))
+
+multiple_offender <- coffee_manhattan_rest_inspec |> 
+  drop_na(zipcode, score) |> 
+  group_by(zipcode) |> 
+  summarise(
+    violation_count = n(),
+    mean_score = mean(as.numeric(score), na.rm = TRUE)
+  ) |> 
+  ungroup() |> 
+  mutate(zipcode = as.character(zipcode),
+         text_label = str_c("Mean score: ", round(mean_score, 1))
+  ) |> 
+  arrange(mean_score)
+
+multiple_offender |> 
+  mutate(zipcode = fct_reorder(zipcode, violation_count)
+  ) |>
+  plot_ly(x = ~zipcode, y = ~violation_count, 
+        color = ~zipcode, type = "bar", colors = "viridis", text = ~text_label) |> 
+  layout(
+    title = "Mean Inspection Scores for Cafes By Year",
+    xaxis = list(title = "Zipcode"),
+    yaxis = list(title = "Violation Counts")
+  )
+```
+
+###  Mean Score Over Time 
+
+```{r}
+coffee_manhattan_rest_inspec |> 
+  drop_na(score) |> 
+  separate(inspection_date, into = c("year", "month", "day"), convert = TRUE) |> 
+  group_by(year, month) |> 
+  summarise(mean_score = mean(score, na.rm = TRUE)) |> 
+  ungroup() |> 
+  plot_ly(
+    x = ~month, y = ~mean_score,
+    color = ~as.factor(year),
+    type = "scatter", mode = "lines+markers",
+    colors = "viridis") |> 
+  layout(
+    title = "Mean Inspection Scores for Cafes By Year",
+    xaxis = list(title = "Month"),
+    yaxis = list(title = "Mean Score")
+  )
+```
+
