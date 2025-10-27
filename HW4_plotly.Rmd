@@ -17,7 +17,7 @@ library(p8105.datasets)
 
 * Inspection dates (`inspection_date`) of 1/1/1900 mean an establishment has not yet had an inspection. We will remove these sites.
 
-### Scatterplot of Café/Coffee/Tea shops in Manhattan by Latitude/Longitude and Inspection Scores.
+### Scatterplot of Café/Coffee/Tea shops in Manhattan by Latitude/Longitude and Inspection Scores
 
 * Higher scores incurred more regulation violations (food handling, food temperature, personal hygiene of restaurant workers, and vermin control).
 
