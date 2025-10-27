@@ -1,0 +1,103 @@
+---
+title: "Plotly plots"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+```{r, message = FALSE}
+library(tidyverse)
+library(plotly)
+library(p8105.datasets)
+```
+
+### Loading the NYC Restaurant Inspections dataset.
+
+* Inspection dates (`inspection_date`) of 1/1/1900 mean an establishment has not yet had an inspection. We will remove these sites.
+
+### Scatterplot of Café/Coffee/Tea shops in Manhattan by Latitude/Longitude and inspection scores.
+
+* Higher scores incurred more regulation violations (food handling, food temperature, personal hygiene of restaurant workers, and vermin control).
+
+```{r}
+data(rest_inspec)
+
+rest_inspec |> 
+  janitor::clean_names()
+
+
+coffee_manhattan_rest_inspec <- rest_inspec |> 
+  drop_na(inspection_date, score, latitude, longitude) |> 
+  filter(
+    boro == "Manhattan",
+    cuisine_description == "Café/Coffee/Tea",
+    latitude != 0,
+    longitude != 0,
+    inspection_date > as.Date("1900-01-01")) |> 
+  mutate(text_label = str_c("Zipcode:", zipcode, "\nName: ", dba, "\nScore: ", score ))
+
+plot_ly(data = coffee_manhattan_rest_inspec,
+    x = ~latitude, y = ~longitude, 
+    type = "scatter", mode = "markers",
+    color = ~score,
+    text = ~text_label, alpha = 0.5
+    )
+```
+
+### Are violations aggregated to certain zipcodes: Bar plot
+
+* Hover for mean score of each zipcode.
+
+```{r}
+
+multiple_offender_names <- coffee_manhattan_rest_inspec |> 
+  drop_na(zipcode, score) |> 
+  group_by(camis, dba, zipcode) |> 
+  summarise(
+    violation_count = n(),
+    mean_score = mean(as.numeric(score), na.rm = TRUE))
+
+multiple_offender <- coffee_manhattan_rest_inspec |> 
+  drop_na(zipcode, score) |> 
+  group_by(zipcode) |> 
+  summarise(
+    violation_count = n(),
+    mean_score = mean(as.numeric(score), na.rm = TRUE)
+  ) |> 
+  ungroup() |> 
+  mutate(zipcode = as.character(zipcode),
+         text_label = str_c("Mean score: ", round(mean_score, 1))
+  ) |> 
+  arrange(mean_score)
+
+multiple_offender |> 
+  mutate(zipcode = fct_reorder(zipcode, violation_count)
+  ) |>
+  plot_ly(x = ~zipcode, y = ~violation_count, 
+        color = ~zipcode, type = "bar", colors = "viridis", text = ~text_label)
+  
+```
+
+* Interestingly, zipcodes 10112 and 10121 have the highest mean violation score of 66 and 38.4, respectively. 10112 (GODIVA CAFE) has a violation count of 4, and 10121 (PRIMO COFFEE CART
+, DUNKIN') has a violation count of 37.
+
+### Mean score over time
+
+```{r}
+coffee_manhattan_rest_inspec |> 
+  group_by(inspection_date) |> 
+  summarise(
+    avg_score = mean(as.numeric(score), na.rm = TRUE),
+    n = n()
+  ) |> 
+  ungroup() |> 
+  plot_ly(
+    x = ~inspection_date,
+    y = ~avg_score,
+    type = "scatter",
+    mode = "lines+markers")
+```
+
+
