@@ -1,0 +1,19 @@
+---
+title: "Kino Watanabe"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+### Introduction
+
+![](images/mood.jpeg)
+
+Kino Watanabe is a second-year Master of Science student in Epidemiology at Columbia University’s Mailman School of Public Health. Her research interests lie at the intersection of psychiatric and spatial epidemiology with a particular focus on suicide and mental health.
+
+Her resume is can be accessed [here](resume.html)
+
+
+
