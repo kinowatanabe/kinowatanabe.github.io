@@ -51,6 +51,9 @@ plot_ly(data = coffee_manhattan_rest_inspec,
   )
 ```
 
+* In general, most cafes are located in lower Manhattan. This is expected, as it is more populous and affluent than other areas of this borough. It seems like most cafes are generally in the lower range of violation scores.
+
+
 ### Are violations aggregated to certain zipcodes: Bar plot
 
 * Hover for mean score of each zipcode.
@@ -113,4 +116,6 @@ coffee_manhattan_rest_inspec |>
     yaxis = list(title = "Mean Score")
   )
 ```
+
+* There is no distinct seasonality to mean violation scores over time. In general, the scores average within a similar range, particuarly for 2016 and onwards.
 
