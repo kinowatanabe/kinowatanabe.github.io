@@ -11,7 +11,7 @@ navbar:
       href: HW4_plotly.html
     - text: "Cafe Dashboard"
       href: HW4_dashboard.html   
-    - icon: fa-envelope fa-lg 
+    - icon: fa-brands fa-square-linkedin
     - href: https://www.linkedin.com/in/kinowatanabe/
     - icon: fa-envelope fa-lg
       href: mailto:<kw3180@cumc.columbia.edu>
