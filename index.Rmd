@@ -1,0 +1,21 @@
+---
+title: "Kino Watanabe"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: yeti
+---
+
+### Introduction
+
+<img src="images/grad.jpg" width="300">
+
+Kino Watanabe is a recent graduate of Columbia University’s Mailman School of Public Health, where she attained her Master of Science in Epidemiology (May 2026). Prior to graduate school, she earned her Bachelor of Science in Biology-Physiology from the University of Washington (June 2022) and gained experience as a research coordinator in infectious disease research, including COVID-19 and RSV. 
+
+Her current research interests lie at the intersection of psychiatric and spatial epidemiology with a particular focus on suicide prevention and mental health. Her master's thesis examined the epidemiology of suicide by jumping from a height in the United States.  Through her research experience and work as a Teaching Assistant, she has demonstrated a strong understanding of epidemiological research (foundational concepts, data collection and management, and statistical analysis). She is proficient in data analysis and visualization in SAS and R. 
+
+In her free time, she enjoys exploring cafes, cooking Japanese dishes, and trying new activities, such as ice skating and squash.
+
+
+
