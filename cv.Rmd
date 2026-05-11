@@ -1,0 +1,6 @@
+---
+title: "cv"
+output: html_document
+---
+
+<embed src="documents/Kino Watanabe CV Data Analyst.docx.pdf" width="100%" height="800px" />

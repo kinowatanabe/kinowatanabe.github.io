@@ -3,10 +3,8 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Resume"
-      href: resume.html
     - text: "CV"
-      href: resume.html
+      href: cv.html
     - icon: fa-linkedin fa-lg
       href: https://www.linkedin.com/in/kinowatanabe/
     - icon: fa-envelope fa-lg

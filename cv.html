@@ -11,7 +11,7 @@
 
 
 
-<title>Kino Watanabe</title>
+<title>cv</title>
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -224,69 +221,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -294,16 +228,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -324,7 +248,7 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="resume.html">CV</a>
+  <a href="cv.html">CV</a>
 </li>
 <li>
   <a href="https://www.linkedin.com/in/kinowatanabe/">
@@ -353,37 +277,15 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Kino Watanabe</h1>
+<h1 class="title toc-ignore">cv</h1>
 
 </div>
 
 
-<div id="introduction" class="section level3">
-<h3>Introduction</h3>
-<p><img src="images/grad.jpg" width="300"></p>
-<p>Kino Watanabe is a recent graduate of Columbia University’s Mailman
-School of Public Health, where she attained her Master of Science in
-Epidemiology (May 2026). Prior to graduate school, she earned her
-Bachelor of Science in Biology-Physiology from the University of
-Washington (June 2022) and gained experience as a research coordinator
-in infectious disease research, including COVID-19 and RSV.</p>
-<p>Her current research interests lie at the intersection of psychiatric
-and spatial epidemiology with a particular focus on suicide prevention
-and mental health. Her master’s thesis examined the epidemiology of
-suicide by jumping from a height in the United States. Through her
-research experience and work as a Teaching Assistant, she has
-demonstrated a strong understanding of epidemiological research
-(foundational concepts, data collection and management, and statistical
-analysis). She is proficient in data analysis and visualization in SAS
-and R.</p>
-<p>In her free time, she enjoys exploring cafes, cooking Japanese
-dishes, and trying new activities, such as ice skating and squash.</p>
-</div>
+<embed src="documents/Kino Watanabe CV Data Analyst.docx.pdf" width="100%" height="800px" />
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -416,35 +318,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
